@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: #2c2c2c;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: left;
+            width: 300px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 300px;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ffffff;
+            border-radius: 4px;
+            background-color: #555;
+            color: #fff;
+            width: 100%;
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .login-btn {
+            background-color: #0087c6;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .login-btn:hover {
+            background-color: #0076a8;
+        }
+
+        .register-text {
+            margin-top: 15px;
+            text-align: left;
+            width: 300px;
+        }
+
+        .register-text a {
+            color: #ff0000;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .register-text a:hover {
+            color: #ff6666;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            width: 300px;
+            margin: 20px 0;
+        }
+
+        .divider-line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: #ffffff;
+        }
+
+        .divider-text {
+            margin: 0 10px;
+            color: #ffffff;
+        }
+
+        .social-login-buttons {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+
+        .social-login-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .social-login-btn i {
+            margin-left: 8px;
+        }
+
+        .google-btn {
+            background-color: #db4437;
+        }
+
+        .google-btn:hover {
+            background-color: #c33c2e;
+        }
+
+        .facebook-btn {
+            background-color: #4267B2;
+        }
+
+        .facebook-btn:hover {
+            background-color: #37589b;
+        }
+
+        .github-btn {
+            background-color: #333333;
+        }
+
+        .github-btn:hover {
+            background-color: #242424;
+        }
+    </style>
+</head>
+<body>
+<h2>Gib dein Passwort ein</h2>
+<form method="post" action="/login" th:object="${loginRequest}">
+    <label for="login"></label><input type="text" id="login" name="login" placeholder="Login" required>
+    <label for="password"></label><input type="password" id="password" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+    <button type="submit" class="login-btn">Login</button>
+</form>
+<div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-text">Oder</div>
+    <div class="divider-line"></div>
+</div>
+<div class="social-login-buttons">
+    <a href="#" class="social-login-btn google-btn">Mit Google fortsetzen <i class="fab fa-google"></i></a>
+    <a href="#" class="social-login-btn facebook-btn">Mit Facebook fortsetzen <i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="social-login-btn github-btn">Mit GitHub fortsetzen <i class="fab fa-github"></i></a>
+</div>
+<p class="register-text">Du hast noch kein Konto? <a href="/register">Registrieren</a></p>
+</body>
+</html>

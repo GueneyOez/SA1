@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Post</title>
+</head>
+<body>
+<h2>Create a new post</h2>
+<form method="post" action="/posts">
+    <input type="hidden" name="userId" th:value="${user.id}" />
+    <label>
+        <textarea name="content" placeholder="What's happening?" required></textarea>
+    </label>
+    <button type="submit">Post</button>
+</form>
+<a href="/posts">View Recent Posts</a>
+</body>
+</html>
