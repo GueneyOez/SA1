@@ -22,7 +22,7 @@ public class PostController {
 
     @GetMapping
     public String getPosts(Model model) {
-        List<Post> posts = postService.getPostsFromLast24Hours();
+        List<Post> posts = postService.getAllPostsSortedByDate();
         model.addAttribute("posts", posts);
         return "posts_page";
     }

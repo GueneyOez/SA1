@@ -65,7 +65,7 @@
     </style>
 </head>
 <body>
-<h2>Posts from the last 24 hours</h2>
+<h2>Recent Posts</h2>
 <div th:each="post : ${posts}" class="post-box">
     <div class="vote-buttons">
         <form method="post" th:action="@{/posts/{id}/vote(id=${post.id})}">

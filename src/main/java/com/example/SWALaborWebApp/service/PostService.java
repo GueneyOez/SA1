@@ -35,9 +35,8 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public List<Post> getPostsFromLast24Hours() {
-        LocalDateTime since = LocalDateTime.now().minusDays(1);
-        return postRepository.findAllPostsFromLast24Hours(since);
+    public List<Post> getAllPostsSortedByDate() {
+        return postRepository.findAllPostsSortedByDate();
     }
 
     public Optional<Post> getPostById(Integer postId) {
