@@ -18,6 +18,7 @@ public class SwaLaborWebAppApplication {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		openBrowser("http://localhost:8080");
 	}
+
 	public static void openBrowser(String url) {
 		try {
 			String os = System.getProperty("os.name").toLowerCase();
@@ -42,10 +43,5 @@ public class SwaLaborWebAppApplication {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@GetMapping("/hello")
-	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-		return String.format("Hello %s!", name);
 	}
 }
