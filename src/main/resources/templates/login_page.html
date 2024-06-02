@@ -160,9 +160,9 @@
     <div class="divider-line"></div>
 </div>
 <div class="social-login-buttons">
-    <a href="#" class="social-login-btn google-btn">Mit Google fortsetzen <i class="fab fa-google"></i></a>
+    <a th:href="@{/oauth2/authorization/google}" class="social-login-btn google-btn">Mit Google fortsetzen <i class="fab fa-google"></i></a>
     <a href="#" class="social-login-btn facebook-btn">Mit Facebook fortsetzen <i class="fab fa-facebook-f"></i></a>
-    <a href="#" class="social-login-btn github-btn">Mit GitHub fortsetzen <i class="fab fa-github"></i></a>
+    <a th:href="@{/oauth2/authorization/github}" class="social-login-btn github-btn">Mit GitHub fortsetzen <i class="fab fa-github"></i></a>
 </div>
 <p class="register-text">Du hast noch kein Konto? <a href="/register">Registrieren</a></p>
 </body>
