@@ -18,6 +18,10 @@ const Login = () => {
         }
     };
 
+    const handleGitHubLogin = () => {
+        window.location.href = 'http://localhost:8080/login';
+    };
+
     return (
         <Container maxWidth="sm">
             <Box sx={{ mt: 8, textAlign: 'center' }}>
@@ -44,6 +48,10 @@ const Login = () => {
                 />
                 <Button variant="contained" color="primary" onClick={handleLogin} sx={{ mt: 2 }}>
                     Login
+                </Button>
+                <Typography variant="body1" sx={{ mt: 4 }}>or</Typography>
+                <Button variant="contained" color="secondary" onClick={handleGitHubLogin} sx={{ mt: 2 }}>
+                    Login with GitHub
                 </Button>
             </Box>
         </Container>

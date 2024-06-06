@@ -7,7 +7,7 @@ import swa.labor.SocialNetwork.model.User;
 import swa.labor.SocialNetwork.service.UserService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/users")
 public class UserController {
 
