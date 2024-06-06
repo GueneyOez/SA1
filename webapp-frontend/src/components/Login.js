@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Typography, Box, Container } from '@mui/material';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { TextField, Button, Typography, Box, Container, IconButton, Tooltip } from '@mui/material';
+import { Facebook, Google, Twitter, GitHub } from '@mui/icons-material';
 import axios from 'axios';
 
 const Login = () => {
@@ -25,10 +26,40 @@ const Login = () => {
     return (
         <Container maxWidth="sm">
             <Box sx={{ mt: 8, textAlign: 'center' }}>
-                <Typography variant="h4" gutterBottom>
-                    Login
+                <Typography variant="h4" gutterBottom style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 500 }}>
+                    Sign In
                 </Typography>
-                {error && <Typography color="error">{error}</Typography>}
+                <Typography variant="h6" style={{ fontFamily: 'Roboto, sans-serif' }}>Sign in with:</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                    <Tooltip title="Placeholder for Facebook login">
+                        <span>
+                            <IconButton disabled>
+                                <Facebook />
+                            </IconButton>
+                        </span>
+                    </Tooltip>
+                    <Tooltip title="Placeholder for Google login">
+                        <span>
+                            <IconButton disabled>
+                                <Google />
+                            </IconButton>
+                        </span>
+                    </Tooltip>
+                    <Tooltip title="Placeholder for Twitter login">
+                        <span>
+                            <IconButton disabled>
+                                <Twitter />
+                            </IconButton>
+                        </span>
+                    </Tooltip>
+                    <Tooltip title="Sign in with GitHub">
+                        <IconButton onClick={handleGitHubLogin}>
+                            <GitHub />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
+                <Typography variant="h6" sx={{ mt: 2 }} style={{ fontFamily: 'Roboto, sans-serif' }}>or:</Typography>
+                {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
                 <TextField
                     label="Username"
                     variant="outlined"
@@ -36,6 +67,7 @@ const Login = () => {
                     margin="normal"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    sx={{ mb: 2 }}
                 />
                 <TextField
                     label="Password"
@@ -45,14 +77,14 @@ const Login = () => {
                     margin="normal"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    sx={{ mb: 2 }}
                 />
-                <Button variant="contained" color="primary" onClick={handleLogin} sx={{ mt: 2 }}>
-                    Login
+                <Button variant="contained" color="primary" onClick={handleLogin} sx={{ mt: 2, py: 1.5 }} fullWidth>
+                    Sign In
                 </Button>
-                <Typography variant="body1" sx={{ mt: 4 }}>or</Typography>
-                <Button variant="contained" color="secondary" onClick={handleGitHubLogin} sx={{ mt: 2 }}>
-                    Login with GitHub
-                </Button>
+                <Typography variant="body1" sx={{ mt: 2 }}>
+                    Not a member? <RouterLink to="/signup" style={{ textDecoration: 'none', color: '#3f51b5' }}>Register</RouterLink>
+                </Typography>
             </Box>
         </Container>
     );
