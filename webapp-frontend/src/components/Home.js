@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText } from '@mui/material';
 import axios from 'axios';
 
-const Home = () => {
+const Home = ({ user }) => {
     const [posts, setPosts] = useState([]);
     const [newPostText, setNewPostText] = useState('');
 
@@ -23,13 +23,12 @@ const Home = () => {
         try {
             const response = await axios.post('http://localhost:8080/posts', {
                 text: newPostText,
-                // You need to pass additional fields required by the backend like longitude, latitude, and authorId
-                longitude: 0.0, // Example value, replace with actual value
-                latitude: 0.0, // Example value, replace with actual value
-                author: { id: 1 } // Example value, replace with actual value
+                longitude: 0.0, // Beispielwert, ersetzen Sie ihn durch den tatsächlichen Wert
+                latitude: 0.0, // Beispielwert, ersetzen Sie ihn durch den tatsächlichen Wert
+                author: { id: user.id } // Verwenden Sie die tatsächliche Benutzer-ID
             });
             setNewPostText('');
-            fetchPosts(); // Refresh posts after successful post creation
+            fetchPosts(); // Aktualisieren Sie die Posts nach erfolgreicher Post-Erstellung
         } catch (error) {
             console.error('Error creating post:', error);
         }
@@ -41,9 +40,11 @@ const Home = () => {
                 <Typography variant="h3" gutterBottom>
                     Home Page
                 </Typography>
-                <Typography variant="body1">
-                    Welcome to the homepage! This is where you will see your personalized content.
-                </Typography>
+                {user && (
+                    <Typography variant="body1">
+                        Welcome, {user.username}!
+                    </Typography>
+                )}
                 <Box sx={{ mt: 4 }}>
                     <TextField
                         label="Write a new post"
@@ -67,7 +68,7 @@ const Home = () => {
                             <ListItem key={post.id}>
                                 <ListItemText
                                     primary={post.text}
-                                    secondary={`Posted by ${post.author.name} at ${new Date(post.postedAt).toLocaleString()}`}
+                                    secondary={`Posted by ${post.author.username} at ${new Date(post.postedAt).toLocaleString()}`}
                                 />
                             </ListItem>
                         ))}

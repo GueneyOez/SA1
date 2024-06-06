@@ -4,7 +4,7 @@ import { TextField, Button, Typography, Box, Container, IconButton, Tooltip } fr
 import { Facebook, Google, Twitter, GitHub } from '@mui/icons-material';
 import axios from 'axios';
 
-const Login = () => {
+const Login = ({ setUser }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -12,7 +12,8 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            await axios.post('http://localhost:8080/users/login', { username, password });
+            const response = await axios.post('http://localhost:8080/users/login', { username, password });
+            setUser(response.data); // Speichern Sie die Benutzerdaten nach erfolgreichem Login
             navigate('/home');
         } catch (error) {
             setError(error.response ? error.response.data : 'Login error');

@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class PostService {
+
     @Autowired
     private PostRepository postRepository;
 
@@ -20,19 +21,18 @@ public class PostService {
     private UserRepository userRepository;
 
     public Post createPost(String text, Float longitude, Float latitude, Integer authorId) {
-        Optional<User> userOptional = userRepository.findById(Long.valueOf(authorId));
-        if (userOptional.isEmpty()) {
-            throw new IllegalArgumentException("Author not found");
+        Optional<User> authorOptional = userRepository.findById(authorId);
+        if (authorOptional.isPresent()) {
+            Post post = new Post();
+            post.setText(text);
+            post.setLongitude(longitude);
+            post.setLatitude(latitude);
+            post.setPostedAt(LocalDateTime.now());
+            post.setAuthor(authorOptional.get());
+            return postRepository.save(post);
+        } else {
+            throw new IllegalArgumentException("Invalid author ID");
         }
-
-        Post post = new Post();
-        post.setText(text);
-        post.setLongitude(longitude);
-        post.setLatitude(latitude);
-        post.setPostedAt(LocalDateTime.now());
-        post.setAuthor(userOptional.get());
-
-        return postRepository.save(post);
     }
 
     public List<Post> getAllPosts() {
