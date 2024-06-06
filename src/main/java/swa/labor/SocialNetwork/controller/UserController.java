@@ -1,14 +1,13 @@
 package swa.labor.SocialNetwork.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import swa.labor.SocialNetwork.model.User;
 import swa.labor.SocialNetwork.service.UserService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/users")
 public class UserController {
 
@@ -19,22 +18,22 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<?> register(@RequestBody User user) {
         try {
-            return userService.registerUser(username, password);
+            User registeredUser = userService.registerUser(user.getUsername(), user.getPassword());
+            return new ResponseEntity<>(registeredUser, HttpStatus.OK);
         } catch (Exception e) {
-            // Handle registration error
-            return null;
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping("/login")
-    public User login(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<?> login(@RequestBody User user) {
         try {
-            return userService.loginUser(username, password);
+            User loggedInUser = userService.loginUser(user.getUsername(), user.getPassword());
+            return new ResponseEntity<>(loggedInUser, HttpStatus.OK);
         } catch (Exception e) {
-            // Handle login error
-            return null;
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

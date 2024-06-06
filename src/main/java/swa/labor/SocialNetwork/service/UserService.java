@@ -1,6 +1,5 @@
 package swa.labor.SocialNetwork.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import swa.labor.SocialNetwork.model.User;
 import swa.labor.SocialNetwork.repository.UserRepository;
