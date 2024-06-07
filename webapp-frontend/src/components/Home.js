@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText } from '@mui/material';
+import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { Link } from 'react-router-dom';
+import CommentIcon from '@mui/icons-material/Comment';
 import axios from 'axios';
 
 const Home = ({ user }) => {
@@ -65,11 +67,14 @@ const Home = ({ user }) => {
                     </Typography>
                     <List>
                         {posts.map((post) => (
-                            <ListItem key={post.id}>
+                            <ListItem key={post.id} alignItems="flex-start">
                                 <ListItemText
                                     primary={post.text}
                                     secondary={`Posted by ${post.author.username} at ${new Date(post.postedAt).toLocaleString()}`}
                                 />
+                                <IconButton component={Link} to={`/comments/${post.id}`}>
+                                    <CommentIcon />
+                                </IconButton>
                             </ListItem>
                         ))}
                     </List>

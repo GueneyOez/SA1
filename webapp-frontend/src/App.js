@@ -6,6 +6,7 @@ import Welcome from './components/Welcome';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
+import CommentPage from './components/CommentPage'; // Import the CommentPage component
 
 function App() {
     const [user, setUser] = useState(null);
@@ -20,6 +21,7 @@ function App() {
                     <Button color="inherit" component={RouterLink} to="/">Welcome</Button>
                     <Button color="inherit" component={RouterLink} to="/signup">Sign Up</Button>
                     <Button color="inherit" component={RouterLink} to="/login">Login</Button>
+                    {user && <Button color="inherit" component={RouterLink} to="/home">Home</Button>}
                 </Toolbar>
             </AppBar>
             <Container>
@@ -28,6 +30,7 @@ function App() {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login setUser={setUser} />} />
                     <Route path="/home" element={<Home user={user} />} />
+                    <Route path="/comments/:postId" element={<CommentPage user={user} />} /> {/* Add this line */}
                 </Routes>
             </Container>
         </Router>
