@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ const CommentPage = ({ user }) => {
     const [comments, setComments] = useState([]);
     const [newCommentText, setNewCommentText] = useState('');
     const [votes, setVotes] = useState({});
+    const [sortOption, setSortOption] = useState('newest'); // Zustand für die Sortieroption
 
     axios.defaults.withCredentials = true;
 
@@ -110,6 +111,15 @@ const CommentPage = ({ user }) => {
         }
     };
 
+    const sortComments = (comments) => {
+        if (sortOption === 'newest') {
+            return [...comments].sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+        } else if (sortOption === 'mostLikes') {
+            return [...comments].sort((a, b) => (votes[b.id]?.upvotes || 0) - (votes[a.id]?.upvotes || 0));
+        }
+        return comments;
+    };
+
     if (!post) return <div>Loading...</div>;
 
     return (
@@ -136,11 +146,23 @@ const CommentPage = ({ user }) => {
                     </Button>
                 </Box>
                 <Box sx={{ mt: 4 }}>
+                    <FormControl variant="outlined" sx={{ minWidth: 120, mb: 2 }}>
+                        <InputLabel id="sort-label">Sort By</InputLabel>
+                        <Select
+                            labelId="sort-label"
+                            value={sortOption}
+                            onChange={(e) => setSortOption(e.target.value)}
+                            label="Sort By"
+                        >
+                            <MenuItem value="newest">Newest</MenuItem>
+                            <MenuItem value="mostLikes">Most Likes</MenuItem>
+                        </Select>
+                    </FormControl>
                     <Typography variant="h5" gutterBottom>
                         Kommentare:
                     </Typography>
                     <List>
-                        {comments.map((comment) => (
+                        {sortComments(comments).map((comment) => (
                             <ListItem key={comment.id} alignItems="flex-start">
                                 <ListItemText
                                     primary={comment.ctext}

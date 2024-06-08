@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -10,6 +10,7 @@ const Home = ({ user }) => {
     const [posts, setPosts] = useState([]);
     const [newPostText, setNewPostText] = useState('');
     const [votes, setVotes] = useState({});
+    const [sortOption, setSortOption] = useState('newest'); // Zustand für die Sortieroption
 
     const fetchPosts = useCallback(async () => {
         try {
@@ -96,6 +97,15 @@ const Home = ({ user }) => {
         }
     };
 
+    const sortPosts = (posts) => {
+        if (sortOption === 'newest') {
+            return [...posts].sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+        } else if (sortOption === 'mostLikes') {
+            return [...posts].sort((a, b) => (votes[b.id]?.upvotes || 0) - (votes[a.id]?.upvotes || 0));
+        }
+        return posts;
+    };
+
     return (
         <Container maxWidth="md">
             <Box sx={{ mt: 8 }}>
@@ -122,11 +132,23 @@ const Home = ({ user }) => {
                     </Button>
                 </Box>
                 <Box sx={{ mt: 4 }}>
+                    <FormControl variant="outlined" sx={{ minWidth: 120, mb: 2 }}>
+                        <InputLabel id="sort-label">Sort By</InputLabel>
+                        <Select
+                            labelId="sort-label"
+                            value={sortOption}
+                            onChange={(e) => setSortOption(e.target.value)}
+                            label="Sort By"
+                        >
+                            <MenuItem value="newest">Newest</MenuItem>
+                            <MenuItem value="mostLikes">Most Likes</MenuItem>
+                        </Select>
+                    </FormControl>
                     <Typography variant="h5" gutterBottom>
                         Posts:
                     </Typography>
                     <List>
-                        {posts.map((post) => (
+                        {sortPosts(posts).map((post) => (
                             <ListItem key={post.id} alignItems="flex-start">
                                 <ListItemText
                                     primary={post.text}
