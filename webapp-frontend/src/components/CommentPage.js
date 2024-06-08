@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton, MenuItem, Select, FormControl, InputLabel, Paper } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { useParams } from 'react-router-dom';
@@ -164,30 +164,32 @@ const CommentPage = ({ user }) => {
                     <List>
                         {sortComments(comments).map((comment) => (
                             <ListItem key={comment.id} alignItems="flex-start">
-                                <ListItemText
-                                    primary={comment.ctext}
-                                    secondary={`Kommentiert von ${comment.author.username} am ${new Date(comment.postedAt).toLocaleString()}`}
-                                />
-                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <IconButton
-                                        onClick={() => handleVote(comment.id, true)}
-                                        color={votes[comment.id]?.userVote && votes[comment.id]?.userVote.isUpvote === true ? 'primary' : 'default'}
-                                    >
-                                        <ThumbUpIcon />
-                                    </IconButton>
-                                    <Typography variant="body2" sx={{ mx: 1 }}>
-                                        {votes[comment.id]?.upvotes || 0}
-                                    </Typography>
-                                    <IconButton
-                                        onClick={() => handleVote(comment.id, false)}
-                                        color={votes[comment.id]?.userVote && votes[comment.id]?.userVote.isUpvote === false ? 'primary' : 'default'}
-                                    >
-                                        <ThumbDownIcon />
-                                    </IconButton>
-                                    <Typography variant="body2" sx={{ mx: 1 }}>
-                                        {votes[comment.id]?.downvotes || 0}
-                                    </Typography>
-                                </Box>
+                                <Paper elevation={3} sx={{ width: '100%', padding: 2 }}>
+                                    <ListItemText
+                                        primary={comment.ctext}
+                                        secondary={`Kommentiert von ${comment.author.username} am ${new Date(comment.postedAt).toLocaleString()}`}
+                                    />
+                                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+                                        <IconButton
+                                            onClick={() => handleVote(comment.id, true)}
+                                            color={votes[comment.id]?.userVote && votes[comment.id]?.userVote.isUpvote === true ? 'primary' : 'default'}
+                                        >
+                                            <ThumbUpIcon />
+                                        </IconButton>
+                                        <Typography variant="body2" sx={{ mx: 1 }}>
+                                            {votes[comment.id]?.upvotes || 0}
+                                        </Typography>
+                                        <IconButton
+                                            onClick={() => handleVote(comment.id, false)}
+                                            color={votes[comment.id]?.userVote && votes[comment.id]?.userVote.isUpvote === false ? 'primary' : 'default'}
+                                        >
+                                            <ThumbDownIcon />
+                                        </IconButton>
+                                        <Typography variant="body2" sx={{ mx: 1 }}>
+                                            {votes[comment.id]?.downvotes || 0}
+                                        </Typography>
+                                    </Box>
+                                </Paper>
                             </ListItem>
                         ))}
                     </List>

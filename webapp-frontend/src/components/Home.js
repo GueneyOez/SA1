@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton, Paper } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -68,15 +68,17 @@ const Home = ({ user }) => {
                     <List>
                         {posts.map((post) => (
                             <ListItem key={post.id} alignItems="flex-start">
-                                <ListItemText
-                                    primary={post.text}
-                                    secondary={`Posted by ${post.author.username} at ${new Date(post.postedAt).toLocaleString()}`}
-                                />
-                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <IconButton component={Link} to={`/comments/${post.id}`}>
-                                        <CommentIcon />
-                                    </IconButton>
-                                </Box>
+                                <Paper elevation={3} sx={{ width: '100%', padding: 2 }}>
+                                    <ListItemText
+                                        primary={post.text}
+                                        secondary={`Posted by ${post.author.username} at ${new Date(post.postedAt).toLocaleString()}`}
+                                    />
+                                    <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+                                        <IconButton component={Link} to={`/comments/${post.id}`}>
+                                            <CommentIcon />
+                                        </IconButton>
+                                    </Box>
+                                </Paper>
                             </ListItem>
                         ))}
                     </List>
