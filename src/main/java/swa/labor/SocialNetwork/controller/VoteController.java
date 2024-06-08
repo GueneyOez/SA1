@@ -40,10 +40,6 @@ public class VoteController {
                 Comment comment = commentService.getCommentById(commentId).orElseThrow(() -> new IllegalArgumentException("Comment not found"));
                 Vote vote = voteService.voteOnComment(comment, user, isUpvote);
                 return ResponseEntity.ok(vote);
-            } else if (postId != null) {
-                Post post = postService.getPostById(postId).orElseThrow(() -> new IllegalArgumentException("Post not found"));
-                Vote vote = voteService.voteOnPost(post, user, isUpvote);
-                return ResponseEntity.ok(vote);
             } else {
                 return ResponseEntity.badRequest().body("Either commentId or postId must be provided");
             }
@@ -61,11 +57,6 @@ public class VoteController {
                 Long upvotes = voteService.countUpvotesByComment(comment);
                 Long downvotes = voteService.countDownvotesByComment(comment);
                 return ResponseEntity.ok(new VoteCounts(upvotes, downvotes));
-            } else if (postId != null) {
-                Post post = postService.getPostById(postId).orElseThrow(() -> new IllegalArgumentException("Post not found"));
-                Long upvotes = voteService.countUpvotesByPost(post);
-                Long downvotes = voteService.countDownvotesByPost(post);
-                return ResponseEntity.ok(new VoteCounts(upvotes, downvotes));
             } else {
                 return ResponseEntity.badRequest().body("Either commentId or postId must be provided");
             }
@@ -81,11 +72,6 @@ public class VoteController {
                 Comment comment = commentService.getCommentById(commentId).orElseThrow(() -> new IllegalArgumentException("Comment not found"));
                 User user = userService.getUserById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
                 Vote vote = voteService.getUserVoteOnComment(comment, user);
-                return ResponseEntity.ok(vote);
-            } else if (postId != null) {
-                Post post = postService.getPostById(postId).orElseThrow(() -> new IllegalArgumentException("Post not found"));
-                User user = userService.getUserById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
-                Vote vote = voteService.getUserVoteOnPost(post, user);
                 return ResponseEntity.ok(vote);
             } else {
                 return ResponseEntity.badRequest().body("Either commentId or postId must be provided");

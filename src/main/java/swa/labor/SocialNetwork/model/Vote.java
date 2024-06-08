@@ -15,11 +15,6 @@ public class Vote {
     private Comment comment;
 
     @ManyToOne
-    @JoinColumn(name = "POST", referencedColumnName = "ID")
-    private Post post;
-
-
-    @ManyToOne
     @JoinColumn(name = "USERS", referencedColumnName = "ID", nullable = false)
     private User user;
 
@@ -39,8 +34,6 @@ public class Vote {
     public void setComment(Comment comment) {
         this.comment = comment;
     }
-
-    public void setPost(Post post) { this.post = post; }
 
     public User getUser() {
         return user;

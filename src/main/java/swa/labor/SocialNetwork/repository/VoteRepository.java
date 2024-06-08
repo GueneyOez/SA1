@@ -16,13 +16,6 @@ public interface VoteRepository extends JpaRepository<Vote, Integer> {
     @Query("SELECT COUNT(v) FROM Vote v WHERE v.comment = :comment AND v.isUpvote = false")
     Long countDownvotesByComment(Comment comment);
 
-    @Query("SELECT COUNT(v) FROM Vote v WHERE v.post = :post AND v.isUpvote = true")
-    Long countUpvotesByPost(Post post);
-
-    @Query("SELECT COUNT(v) FROM Vote v WHERE v.post = :post AND v.isUpvote = false")
-    Long countDownvotesByPost(Post post);
-
     List<Vote> findByCommentAndUser(Comment comment, User user);
-    List<Vote> findByPostAndUser(Post post, User user);
 
 }

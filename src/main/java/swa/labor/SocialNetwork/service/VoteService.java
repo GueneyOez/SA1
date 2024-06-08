@@ -40,27 +40,6 @@ public class VoteService {
         return voteRepository.save(vote);
     }
 
-    public Vote voteOnPost(Post post, User user, boolean isUpvote) {
-        List<Vote> existingVotes = voteRepository.findByPostAndUser(post, user);
-
-        if (!existingVotes.isEmpty()) {
-            Vote existingVote = existingVotes.get(0);
-            if (existingVote.getIsUpvote() == isUpvote) {
-                voteRepository.delete(existingVote);
-                return null;
-            } else {
-                existingVote.setIsUpvote(isUpvote);
-                return voteRepository.save(existingVote);
-            }
-        }
-
-        Vote vote = new Vote();
-        vote.setPost(post);
-        vote.setUser(user);
-        vote.setIsUpvote(isUpvote);
-        return voteRepository.save(vote);
-    }
-
     public Long countUpvotesByComment(Comment comment) {
         return voteRepository.countUpvotesByComment(comment);
     }
@@ -75,23 +54,6 @@ public class VoteService {
 
     public Vote getUserVoteOnComment(Comment comment, User user) {
         List<Vote> votes = voteRepository.findByCommentAndUser(comment, user);
-        return votes.isEmpty() ? null : votes.get(0);
-    }
-
-    public Long countUpvotesByPost(Post post) {
-        return voteRepository.countUpvotesByPost(post);
-    }
-
-    public Long countDownvotesByPost(Post post) {
-        return voteRepository.countDownvotesByPost(post);
-    }
-
-    public boolean hasUserVotedOnPost(Post post, User user) {
-        return !voteRepository.findByPostAndUser(post, user).isEmpty();
-    }
-
-    public Vote getUserVoteOnPost(Post post, User user) {
-        List<Vote> votes = voteRepository.findByPostAndUser(post, user);
         return votes.isEmpty() ? null : votes.get(0);
     }
 

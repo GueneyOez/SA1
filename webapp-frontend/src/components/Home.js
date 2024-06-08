@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -9,8 +7,6 @@ import axios from 'axios';
 const Home = ({ user }) => {
     const [posts, setPosts] = useState([]);
     const [newPostText, setNewPostText] = useState('');
-    const [votes, setVotes] = useState({});
-    const [sortOption, setSortOption] = useState('newest'); // Zustand für die Sortieroption
 
     const fetchPosts = useCallback(async () => {
         try {
@@ -21,89 +17,23 @@ const Home = ({ user }) => {
         }
     }, []);
 
-    const fetchVotes = useCallback(async (postId) => {
-        try {
-            const response = await axios.get('http://localhost:8080/votes/count', {
-                params: { postId }
-            });
-            setVotes((prevVotes) => ({
-                ...prevVotes,
-                [postId]: {
-                    ...prevVotes[postId],
-                    ...response.data
-                }
-            }));
-        } catch (error) {
-            console.error('Error fetching votes:', error);
-        }
-    }, []);
-
-    const fetchUserVoteStatus = useCallback(async (postId) => {
-        try {
-            const response = await axios.get('http://localhost:8080/votes/hasVoted', {
-                params: { postId, userId: user.id }
-            });
-            setVotes((prevVotes) => ({
-                ...prevVotes,
-                [postId]: {
-                    ...prevVotes[postId],
-                    userVote: response.data
-                }
-            }));
-        } catch (error) {
-            console.error('Error checking user vote status:', error);
-        }
-    }, [user.id]);
-
     useEffect(() => {
         fetchPosts();
     }, [fetchPosts]);
-
-    useEffect(() => {
-        posts.forEach((post) => {
-            fetchVotes(post.id);
-            fetchUserVoteStatus(post.id);
-        });
-    }, [posts, fetchVotes, fetchUserVoteStatus]);
 
     const handlePostSubmit = async () => {
         try {
             await axios.post('http://localhost:8080/posts', {
                 text: newPostText,
-                longitude: 0.0, // Beispielwert, ersetzen Sie ihn durch den tatsächlichen Wert
-                latitude: 0.0, // Beispielwert, ersetzen Sie ihn durch den tatsächlichen Wert
-                author: { id: user.id } // Verwenden Sie die tatsächliche Benutzer-ID
+                longitude: 0.0,
+                latitude: 0.0,
+                author: { id: user.id }
             });
             setNewPostText('');
             fetchPosts();
         } catch (error) {
             console.error('Error creating post:', error);
         }
-    };
-
-    const handleVote = async (postId, isUpvote) => {
-        try {
-            await axios.post('http://localhost:8080/votes', null, {
-                params: {
-                    postId,
-                    userId: user.id,
-                    isUpvote
-                }
-            });
-            fetchVotes(postId);
-            fetchUserVoteStatus(postId);
-        } catch (error) {
-            console.error('Error voting:', error);
-        }
-    };
-
-    const sortPosts = (posts) => {
-        if (sortOption === 'newest') {
-            return [...posts].sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
-        } else if (sortOption === 'mostLikes') {
-            return [...posts].sort((a, b) => (votes[b.id]?.upvotes || 0) - (votes[a.id]?.upvotes || 0));
-        }
-        return posts;
     };
 
     return (
@@ -132,47 +62,17 @@ const Home = ({ user }) => {
                     </Button>
                 </Box>
                 <Box sx={{ mt: 4 }}>
-                    <FormControl variant="outlined" sx={{ minWidth: 120, mb: 2 }}>
-                        <InputLabel id="sort-label">Sort By</InputLabel>
-                        <Select
-                            labelId="sort-label"
-                            value={sortOption}
-                            onChange={(e) => setSortOption(e.target.value)}
-                            label="Sort By"
-                        >
-                            <MenuItem value="newest">Newest</MenuItem>
-                            <MenuItem value="mostLikes">Most Likes</MenuItem>
-                        </Select>
-                    </FormControl>
                     <Typography variant="h5" gutterBottom>
                         Posts:
                     </Typography>
                     <List>
-                        {sortPosts(posts).map((post) => (
+                        {posts.map((post) => (
                             <ListItem key={post.id} alignItems="flex-start">
                                 <ListItemText
                                     primary={post.text}
                                     secondary={`Posted by ${post.author.username} at ${new Date(post.postedAt).toLocaleString()}`}
                                 />
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <IconButton
-                                        onClick={() => handleVote(post.id, true)}
-                                        color={votes[post.id]?.userVote && votes[post.id]?.userVote.isUpvote === true ? 'primary' : 'default'}
-                                    >
-                                        <ThumbUpIcon />
-                                    </IconButton>
-                                    <Typography variant="body2" sx={{ mx: 1 }}>
-                                        {votes[post.id]?.upvotes || 0}
-                                    </Typography>
-                                    <IconButton
-                                        onClick={() => handleVote(post.id, false)}
-                                        color={votes[post.id]?.userVote && votes[post.id]?.userVote.isUpvote === false ? 'primary' : 'default'}
-                                    >
-                                        <ThumbDownIcon />
-                                    </IconButton>
-                                    <Typography variant="body2" sx={{ mx: 1 }}>
-                                        {votes[post.id]?.downvotes || 0}
-                                    </Typography>
                                     <IconButton component={Link} to={`/comments/${post.id}`}>
                                         <CommentIcon />
                                     </IconButton>
