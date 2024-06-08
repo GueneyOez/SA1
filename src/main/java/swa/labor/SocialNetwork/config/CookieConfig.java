@@ -11,4 +11,5 @@ public class CookieConfig {
     public CookieSameSiteSupplier applicationCookieSameSiteSupplier() {
         return CookieSameSiteSupplier.ofNone().whenHasName("JSESSIONID");
     }
+
 }

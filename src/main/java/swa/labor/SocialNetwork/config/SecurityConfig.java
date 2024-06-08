@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/users/register", "/users/login", "/posts/**", "/comments/**").permitAll()
+                        .requestMatchers("/**", "/users/register", "/users/login", "/posts/**", "/comments/**","/votes/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2.successHandler(oAuth2LoginSuccessHandler))
                 .build();
@@ -48,3 +48,4 @@ public class SecurityConfig {
         return source;
     }
 }
+

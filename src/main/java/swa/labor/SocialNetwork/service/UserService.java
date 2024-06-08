@@ -33,4 +33,8 @@ public class UserService {
             throw new Exception("Invalid credentials");
         }
     }
+
+    public Optional<User> getUserById(Integer userId) {
+        return userRepository.findById(userId);
+    }
 }

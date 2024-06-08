@@ -25,7 +25,7 @@ public class CommentService {
     @Autowired
     private UserRepository userRepository;
 
-    public Comment createComment(String ctext, Float longitude, Float latitude, Integer authorId, Integer postId) {
+    public Comment createComment(String ctext, Double longitude, Double latitude, Integer authorId, Integer postId) {
         Optional<User> authorOptional = userRepository.findById(authorId);
         Optional<Post> postOptional = postRepository.findById(postId);
 
@@ -45,5 +45,9 @@ public class CommentService {
 
     public List<Comment> getCommentsByPostId(Integer postId) {
         return commentRepository.findByPostId(postId);
+    }
+
+    public Optional<Comment> getCommentById(Integer commentId) {
+        return commentRepository.findById(commentId);
     }
 }
