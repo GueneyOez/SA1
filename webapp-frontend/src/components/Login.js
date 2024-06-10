@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { TextField, Button, Typography, Box, Container, IconButton, Tooltip } from '@mui/material';
-import { Facebook, Google, Twitter, GitHub } from '@mui/icons-material';
+import { Facebook, Google, Twitter, GitHub, Key } from '@mui/icons-material'; // Importieren Sie das Key Icon
 import axios from 'axios';
 
 const Login = ({ setUser }) => {
@@ -20,8 +20,8 @@ const Login = ({ setUser }) => {
         }
     };
 
-    const handleGitHubLogin = () => {
-        window.location.href = 'http://localhost:8081/login';
+    const handleOAuthLogin = (provider) => {
+        window.location.href = `http://localhost:8081/oauth2/authorization/${provider}`;
     };
 
     return (
@@ -39,12 +39,10 @@ const Login = ({ setUser }) => {
                             </IconButton>
                         </span>
                     </Tooltip>
-                    <Tooltip title="Placeholder for Google login">
-                        <span>
-                            <IconButton disabled>
-                                <Google />
-                            </IconButton>
-                        </span>
+                    <Tooltip title="Sign in with Google">
+                        <IconButton onClick={() => handleOAuthLogin('google')}>
+                            <Google />
+                        </IconButton>
                     </Tooltip>
                     <Tooltip title="Placeholder for Twitter login">
                         <span>
@@ -54,8 +52,13 @@ const Login = ({ setUser }) => {
                         </span>
                     </Tooltip>
                     <Tooltip title="Sign in with GitHub">
-                        <IconButton onClick={handleGitHubLogin}>
+                        <IconButton onClick={() => handleOAuthLogin('github')}>
                             <GitHub />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Sign in with Keycloak">
+                        <IconButton onClick={() => handleOAuthLogin('keycloak')}>
+                            <Key /> {/* Verwenden Sie das Key Icon für Keycloak */}
                         </IconButton>
                     </Tooltip>
                 </Box>
