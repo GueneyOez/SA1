@@ -17,7 +17,7 @@ const CommentPage = ({ user }) => {
 
     const fetchPost = useCallback(async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/posts/${postId}`);
+            const response = await axios.get(`http://localhost:8081/posts/${postId}`);
             setPost(response.data);
         } catch (error) {
             console.error('Error fetching post:', error);
@@ -26,7 +26,7 @@ const CommentPage = ({ user }) => {
 
     const fetchComments = useCallback(async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/comments/post/${postId}`);
+            const response = await axios.get(`http://localhost:8081/comments/post/${postId}`);
             setComments(response.data);
         } catch (error) {
             console.error('Error fetching comments:', error);
@@ -35,7 +35,7 @@ const CommentPage = ({ user }) => {
 
     const fetchVotes = useCallback(async (commentId) => {
         try {
-            const response = await axios.get(`http://localhost:8080/votes/count`, {
+            const response = await axios.get(`http://localhost:8081/votes/count`, {
                 params: { commentId }
             });
             setVotes((prevVotes) => ({
@@ -52,7 +52,7 @@ const CommentPage = ({ user }) => {
 
     const fetchUserVoteStatus = useCallback(async (commentId) => {
         try {
-            const response = await axios.get(`http://localhost:8080/votes/hasVoted`, {
+            const response = await axios.get(`http://localhost:8081/votes/hasVoted`, {
                 params: { commentId, userId: user.id }
             });
             setVotes((prevVotes) => ({
@@ -81,7 +81,7 @@ const CommentPage = ({ user }) => {
 
     const handleCommentSubmit = async () => {
         try {
-            await axios.post('http://localhost:8080/comments', {
+            await axios.post('http://localhost:8081/comments', {
                 ctext: newCommentText,
                 longitude: 0.0, // Beispielwert, ersetzen Sie ihn durch den tatsächlichen Wert
                 latitude: 0.0, // Beispielwert, ersetzen Sie ihn durch den tatsächlichen Wert
@@ -97,7 +97,7 @@ const CommentPage = ({ user }) => {
 
     const handleVote = async (commentId, isUpvote) => {
         try {
-            await axios.post('http://localhost:8080/votes', null, {
+            await axios.post('http://localhost:8081/votes', null, {
                 params: {
                     commentId,
                     userId: user.id,

@@ -44,6 +44,12 @@ public class PostController {
         }
     }
 
+    @GetMapping("/within")
+    public ResponseEntity<List<Post>> getPostsWithinRadius(@RequestParam double latitude, @RequestParam double longitude, @RequestParam double radius) {
+        List<Post> posts = postService.getPostsWithinRadius(latitude, longitude, radius);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePost(@PathVariable Integer id) {
         try {

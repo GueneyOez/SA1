@@ -46,4 +46,9 @@ public class PostService {
     public void deletePost(Integer id) {
         postRepository.deleteById(id);
     }
+
+
+    public List<Post> getPostsWithinRadius(double latitude, double longitude, double radius) {
+        return postRepository.findAllWithinRadius(latitude, longitude, radius);
+    }
 }

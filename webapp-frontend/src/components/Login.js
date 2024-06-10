@@ -12,7 +12,7 @@ const Login = ({ setUser }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/users/login', { username, password });
+            const response = await axios.post('http://localhost:8081/users/login', { username, password });
             setUser(response.data); // Speichern Sie die Benutzerdaten nach erfolgreichem Login
             navigate('/home');
         } catch (error) {
@@ -21,7 +21,7 @@ const Login = ({ setUser }) => {
     };
 
     const handleGitHubLogin = () => {
-        window.location.href = 'http://localhost:8080/login';
+        window.location.href = 'http://localhost:8081/login';
     };
 
     return (

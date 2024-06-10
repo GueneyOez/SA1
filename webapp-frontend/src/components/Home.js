@@ -7,10 +7,17 @@ import axios from 'axios';
 const Home = ({ user }) => {
     const [posts, setPosts] = useState([]);
     const [newPostText, setNewPostText] = useState('');
+    const [userLocation, setUserLocation] = useState({ latitude: null, longitude: null });
 
-    const fetchPosts = useCallback(async () => {
+    const fetchPosts = useCallback(async (latitude, longitude, radius = 10000) => {
         try {
-            const response = await axios.get('http://localhost:8080/posts');
+            const response = await axios.get('http://localhost:8081/posts/within', {
+                params: {
+                    latitude: latitude,
+                    longitude: longitude,
+                    radius: radius
+                }
+            });
             setPosts(response.data);
         } catch (error) {
             console.error('Error fetching posts:', error);
@@ -18,21 +25,31 @@ const Home = ({ user }) => {
     }, []);
 
     useEffect(() => {
-        fetchPosts();
+        navigator.geolocation.getCurrentPosition((position) => {
+            const { latitude, longitude } = position.coords;
+            setUserLocation({ latitude, longitude });
+            fetchPosts(latitude, longitude);
+        }, (error) => {
+            console.error('Error getting user location:', error);
+        });
     }, [fetchPosts]);
 
     const handlePostSubmit = async () => {
-        try {
-            await axios.post('http://localhost:8080/posts', {
-                text: newPostText,
-                longitude: 0.0,
-                latitude: 0.0,
-                author: { id: user.id }
-            });
-            setNewPostText('');
-            fetchPosts();
-        } catch (error) {
-            console.error('Error creating post:', error);
+        if (userLocation.latitude && userLocation.longitude) {
+            try {
+                await axios.post('http://localhost:8081/posts', {
+                    text: newPostText,
+                    longitude: userLocation.longitude,
+                    latitude: userLocation.latitude,
+                    author: { id: user.id }
+                });
+                setNewPostText('');
+                fetchPosts(userLocation.latitude, userLocation.longitude);
+            } catch (error) {
+                console.error('Error creating post:', error);
+            }
+        } else {
+            console.error('User location not available');
         }
     };
 

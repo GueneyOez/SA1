@@ -12,7 +12,7 @@ const Signup = () => {
 
     const handleSignup = async () => {
         try {
-            await axios.post('http://localhost:8080/users/register', { username, password });
+            await axios.post('http://localhost:8081/users/register', { username, password });
             navigate('/login');
         } catch (error) {
             setError(error.response ? error.response.data : 'Signup error');
@@ -20,7 +20,7 @@ const Signup = () => {
     };
 
     const handleGitHubSignup = () => {
-        window.location.href = 'http://localhost:8080/login';
+        window.location.href = 'http://localhost:8081/login';
     };
 
     return (
