@@ -9,7 +9,7 @@ const Home = ({ user }) => {
     const [newPostText, setNewPostText] = useState('');
     const [userLocation, setUserLocation] = useState({ latitude: null, longitude: null });
 
-    const fetchPosts = useCallback(async (latitude, longitude, radius = 10000) => {
+    const fetchPosts = useCallback(async (latitude, longitude, radius = 10) => {
         try {
             const response = await axios.get('http://localhost:8081/posts/within', {
                 params: {
