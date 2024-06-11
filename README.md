@@ -1,8 +1,10 @@
 ## Klone das Repository von GitHub:
 
 
-git clone https://github.com/GueneyOez/SA1.git \n
+git clone https://github.com/GueneyOez/SA1.git
+
 cd SA1
+
 git checkout test
 
 ## Starte die PostgreSQL-Datenbankinstanz:
@@ -41,5 +43,7 @@ bash
 ## Starte React
 
 cd webapp-frontend
+
 npm install
+
 npm start
