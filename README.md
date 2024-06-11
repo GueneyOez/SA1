@@ -1,7 +1,7 @@
 ## Klone das Repository von GitHub:
 
 
-git clone https://github.com/GueneyOez/SA1.git
+git clone https://github.com/GueneyOez/SA1.git \n
 cd SA1
 git checkout test
 
