@@ -26,11 +26,11 @@ psql -U postgres --file create_database.sql
 
 properties
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/expensetrackerdb
-spring.datasource.username=expensetracker
-spring.datasource.password=password
+spring.datasource.url=jdbc:postgresql://localhost:5432/jodel
+spring.datasource.username=postgres
+spring.datasource.password=admin
 
-    Führe die Spring Boot-Anwendung aus:
+## Führe die Spring Boot-Anwendung aus:
 
 Führe den folgenden Befehl aus, um deine Anwendung zu starten:
 
