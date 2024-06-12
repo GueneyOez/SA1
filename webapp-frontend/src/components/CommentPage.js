@@ -1,3 +1,4 @@
+// src/components/CommentPage.js
 import React, { useState, useEffect, useCallback } from 'react';
 import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton, MenuItem, Select, FormControl, InputLabel, Paper } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -11,7 +12,7 @@ const CommentPage = ({ user }) => {
     const [comments, setComments] = useState([]);
     const [newCommentText, setNewCommentText] = useState('');
     const [votes, setVotes] = useState({});
-    const [sortOption, setSortOption] = useState('newest'); // Zustand für die Sortieroption
+    const [sortOption, setSortOption] = useState('newest');
 
     axios.defaults.withCredentials = true;
 
@@ -83,13 +84,13 @@ const CommentPage = ({ user }) => {
         try {
             await axios.post('http://localhost:8081/comments', {
                 ctext: newCommentText,
-                longitude: 0.0, // Beispielwert, ersetzen Sie ihn durch den tatsächlichen Wert
-                latitude: 0.0, // Beispielwert, ersetzen Sie ihn durch den tatsächlichen Wert
-                author: { id: user.id }, // Verwenden Sie die tatsächliche Benutzer-ID
-                post: { id: postId } // Verwenden Sie die tatsächliche Post-ID
+                longitude: 0.0,
+                latitude: 0.0,
+                author: { id: user.id },
+                post: { id: postId }
             });
             setNewCommentText('');
-            await fetchComments(); // Kommentare nach erfolgreicher Kommentierung aktualisieren
+            await fetchComments();
         } catch (error) {
             console.error('Error creating comment:', error);
         }
@@ -129,11 +130,11 @@ const CommentPage = ({ user }) => {
                     {post.text}
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                    Gepostet von {post.author.username} am {new Date(post.postedAt).toLocaleString()}
+                    Posted by {post.author.username} at {new Date(post.postedAt).toLocaleString()}
                 </Typography>
                 <Box sx={{ mt: 4 }}>
                     <TextField
-                        label="Schreiben Sie einen neuen Kommentar"
+                        label="Write a new comment"
                         multiline
                         rows={4}
                         variant="outlined"
@@ -142,7 +143,7 @@ const CommentPage = ({ user }) => {
                         onChange={(e) => setNewCommentText(e.target.value)}
                     />
                     <Button variant="contained" color="primary" onClick={handleCommentSubmit} sx={{ mt: 2 }}>
-                        Kommentar
+                        Comment
                     </Button>
                 </Box>
                 <Box sx={{ mt: 4 }}>
@@ -159,7 +160,7 @@ const CommentPage = ({ user }) => {
                         </Select>
                     </FormControl>
                     <Typography variant="h5" gutterBottom>
-                        Kommentare:
+                        Comments:
                     </Typography>
                     <List>
                         {sortComments(comments).map((comment) => (
@@ -167,7 +168,7 @@ const CommentPage = ({ user }) => {
                                 <Paper elevation={3} sx={{ width: '100%', padding: 2 }}>
                                     <ListItemText
                                         primary={comment.ctext}
-                                        secondary={`Kommentiert von ${comment.author.username} am ${new Date(comment.postedAt).toLocaleString()}`}
+                                        secondary={`Commented by ${comment.author.username} at ${new Date(comment.postedAt).toLocaleString()}`}
                                     />
                                     <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
                                         <IconButton

@@ -1,3 +1,4 @@
+// src/components/Home.js
 import React, { useState, useEffect, useCallback } from 'react';
 import { Typography, Box, Container, TextField, Button, List, ListItem, ListItemText, IconButton, Paper } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -8,6 +9,7 @@ const Home = ({ user }) => {
     const [posts, setPosts] = useState([]);
     const [newPostText, setNewPostText] = useState('');
     const [userLocation, setUserLocation] = useState({ latitude: null, longitude: null });
+    const [sortOption, setSortOption] = useState('newest');
 
     const fetchPosts = useCallback(async (latitude, longitude, radius = 10) => {
         try {
@@ -34,6 +36,12 @@ const Home = ({ user }) => {
         });
     }, [fetchPosts]);
 
+    const sortPosts = (posts) => {
+        if (sortOption === 'newest') {
+            return [...posts].sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
+        }
+    };
+
     const handlePostSubmit = async () => {
         if (userLocation.latitude && userLocation.longitude) {
             try {
@@ -57,7 +65,7 @@ const Home = ({ user }) => {
         <Container maxWidth="md">
             <Box sx={{ mt: 8 }}>
                 <Typography variant="h3" gutterBottom>
-                    Home Page
+                    Posts nearby!
                 </Typography>
                 {user && (
                     <Typography variant="body1">
@@ -83,7 +91,7 @@ const Home = ({ user }) => {
                         Posts:
                     </Typography>
                     <List>
-                        {posts.map((post) => (
+                        {sortPosts(posts).map((post) => (
                             <ListItem key={post.id} alignItems="flex-start">
                                 <Paper elevation={3} sx={{ width: '100%', padding: 2 }}>
                                     <ListItemText

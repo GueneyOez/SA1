@@ -1,3 +1,4 @@
+// src/components/Signup.js
 import React, { useState } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { TextField, Button, Typography, Box, Container, IconButton, Tooltip } from '@mui/material';
@@ -26,10 +27,10 @@ const Signup = () => {
     return (
         <Container maxWidth="sm">
             <Box sx={{ mt: 8, textAlign: 'center' }}>
-                <Typography variant="h4" gutterBottom style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 500 }}>
+                <Typography variant="h4" gutterBottom>
                     Sign Up
                 </Typography>
-                <Typography variant="h6" style={{ fontFamily: 'Roboto, sans-serif' }}>Sign up with:</Typography>
+                <Typography variant="h6">Sign up with:</Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                     <Tooltip title="Placeholder for Facebook signup">
                         <span>
@@ -58,7 +59,7 @@ const Signup = () => {
                         </IconButton>
                     </Tooltip>
                 </Box>
-                <Typography variant="h6" sx={{ mt: 2 }} style={{ fontFamily: 'Roboto, sans-serif' }}>or:</Typography>
+                <Typography variant="h6" sx={{ mt: 2 }}>or:</Typography>
                 {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
                 <TextField
                     label="Username"
@@ -83,7 +84,7 @@ const Signup = () => {
                     Sign Up
                 </Button>
                 <Typography variant="body1" sx={{ mt: 2 }}>
-                    Already a member? <RouterLink to="/login" style={{ textDecoration: 'none', color: '#3f51b5' }}>Sign in</RouterLink>
+                    Already a member? <RouterLink to="/login" style={{ textDecoration: 'none', color: '#1DA1F2' }}>Sign in</RouterLink>
                 </Typography>
             </Box>
         </Container>

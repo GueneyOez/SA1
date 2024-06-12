@@ -1,7 +1,8 @@
+// src/components/Login.js
 import React, { useState } from 'react';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { TextField, Button, Typography, Box, Container, IconButton, Tooltip } from '@mui/material';
-import { Facebook, Google, Twitter, GitHub, Key } from '@mui/icons-material'; // Importieren Sie das Key Icon
+import { Facebook, Google, Twitter, GitHub, Key } from '@mui/icons-material';
 import axios from 'axios';
 
 const Login = ({ setUser }) => {
@@ -13,7 +14,7 @@ const Login = ({ setUser }) => {
     const handleLogin = async () => {
         try {
             const response = await axios.post('http://localhost:8081/users/login', { username, password });
-            setUser(response.data); // Speichern Sie die Benutzerdaten nach erfolgreichem Login
+            setUser(response.data);
             navigate('/home');
         } catch (error) {
             setError(error.response ? error.response.data : 'Login error');
@@ -27,10 +28,10 @@ const Login = ({ setUser }) => {
     return (
         <Container maxWidth="sm">
             <Box sx={{ mt: 8, textAlign: 'center' }}>
-                <Typography variant="h4" gutterBottom style={{ fontFamily: 'Roboto, sans-serif', fontWeight: 500 }}>
+                <Typography variant="h4" gutterBottom>
                     Sign In
                 </Typography>
-                <Typography variant="h6" style={{ fontFamily: 'Roboto, sans-serif' }}>Sign in with:</Typography>
+                <Typography variant="h6">Sign in with:</Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                     <Tooltip title="Placeholder for Facebook login">
                         <span>
@@ -58,11 +59,11 @@ const Login = ({ setUser }) => {
                     </Tooltip>
                     <Tooltip title="Sign in with Keycloak">
                         <IconButton onClick={() => handleOAuthLogin('keycloak')}>
-                            <Key /> {/* Verwenden Sie das Key Icon für Keycloak */}
+                            <Key />
                         </IconButton>
                     </Tooltip>
                 </Box>
-                <Typography variant="h6" sx={{ mt: 2 }} style={{ fontFamily: 'Roboto, sans-serif' }}>or:</Typography>
+                <Typography variant="h6" sx={{ mt: 2 }}>or:</Typography>
                 {error && <Typography color="error" sx={{ mt: 2 }}>{error}</Typography>}
                 <TextField
                     label="Username"
@@ -87,7 +88,7 @@ const Login = ({ setUser }) => {
                     Sign In
                 </Button>
                 <Typography variant="body1" sx={{ mt: 2 }}>
-                    Not a member? <RouterLink to="/signup" style={{ textDecoration: 'none', color: '#3f51b5' }}>Register</RouterLink>
+                    Not a member? <RouterLink to="/signup" style={{ textDecoration: 'none', color: '#1DA1F2' }}>Register</RouterLink>
                 </Typography>
             </Box>
         </Container>
